@@ -1,20 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { View } from 'react-native'
+import styles from './style/style'
+import Header from './components/Header'
+import Footer from './components/Footer'
+import Gameboard from './components/Gameboard'
+import { useFonts } from 'expo-font'
 
-export default function App() {
+export default function App () {
+
+  const [loaded] = useFonts({
+    Caveat: require('./assets/Fonts/Caveat-VariableFont_wght.ttf'),
+    ComforterBrush: require('./assets/Fonts/ComforterBrush-Regular.ttf'),
+    Shadow: require('./assets/Fonts/ShadowsIntoLight-Regular.ttf')
+  })
+
+  if (!loaded) {
+    return null
+  }
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Header />
+      <Gameboard />
+      <Footer />
     </View>
-  );
+  )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
