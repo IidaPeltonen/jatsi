@@ -13,7 +13,6 @@ let tulokset = [0, 0, 0, 0, 0, 0, 0]
 
 export default function Gameboard () {
   const [nbrOfThrowsLeft, setNbrOfThrowsLeft] = useState(NBR_OF_THROWS)
-  //const [nbrOfThrowsAllLeft, setNbrOfThrowsAllLeft] = useState(15)
   const [status, setStatus] = useState('')
   const [selectedDices, setSelectedDices] = useState(
     new Array(NBR_OF_DICES).fill(false)
@@ -26,23 +25,11 @@ export default function Gameboard () {
   const [disabledNopat, setDisabledNopat] = useState(false)
   const [disabledHeittoNappi, setDisabledHeittoNappi] = useState(false)
 
-  const handleResultUpdate = async() => {
-    setDisabledTulosNapit(true)
-  }
-
-  const handleNopatUpdate = async() => {
-    disabledNopat(true)
-  }
-
-  const handleNappiUpdate = async() => {
-    disabledHeittoNappi(true)
-  }
-
   //nopparivi
   const row = []
   for (let i = 0; i < NBR_OF_DICES; i++) {
     row.push(
-      <Pressable key={'row' + i} onPress={() => selectDice(i)}>
+      <Pressable key={'row' + i} onPress={() => selectDice(i)} disabled={disabledNopat}>
         <MaterialCommunityIcons
           name={board[i]}
           key={'row' + i}
@@ -63,9 +50,10 @@ export default function Gameboard () {
             <Text style={styles.tuloksetOtsikko}>{tulokset[i]}</Text>
           </Row>
           <Row size={1}>
-            <Pressable key={'tuloksetButtons' + i} onPress={() => selectResult(i)}
+            <Pressable key={'nappi' + i} onPress={() => selectResult(i)}
               style={styles.tuloksetButtons}
               color={getResultColor(i)}
+              disabled={disabledTulosNapit}
             >
               <Text>{i}</Text>
             </Pressable>
@@ -76,19 +64,12 @@ export default function Gameboard () {
   }
 
   function getDiceColor (i) {
-    if (board.every((val, i, arr) => val === arr[0])) {
-      return 'lightgreen'
-    } else {
-      return selectedDices[i] ? 'grey' : '#FC85D3' // noppien väri, valittu, ei
-    }
+    return selectedDices[i] ? 'grey' : '#FC85D3' // noppien väri, valittu, 
   }
 
+  //ei toimi ollenkaan
   function getResultColor (i) {
-    if (tuloksetButtons.every((val, i, arr) => val === arr[0])) {
-      return 'blue'
-    } else {
       return selectedResult[i] ? 'blue' : 'purple' // nappien väri, valittu, ei
-    }
   }
 
   //noppien valinta
@@ -104,16 +85,20 @@ export default function Gameboard () {
     result[i] = selectedResult[i] ? false : true
     setSelectedResult(result)
     checkResults(i)
-    setSelectedDices(new Array(NBR_OF_DICES).fill(false))
+    board = (new Array(NBR_OF_DICES).fill(false))
+    setNbrOfThrowsLeft(NBR_OF_THROWS)
+    setDisabledHeittoNappi(false)
+    setDisabledNopat(false)
   }
 
   function throwDices () {
-    for (let i = 0; i < NBR_OF_DICES; i++) {
-      if (!selectedDices[i]) {
-        let randomNumber = Math.floor(Math.random() * 6 + 1)
-        board[i] = 'dice-' + randomNumber // + '-outline' erilaiset, ei näköjään kovin nätit
-        //kokeillaan taulukkoa jossa on tallesssa vain pelkkä numero
-        nopat[i] = randomNumber
+     if ( nbrOfThrowsLeft < 4 &&  nbrOfThrowsLeft > 0) {
+      for (let i = 0; i < NBR_OF_DICES; i++) {
+        if (!selectedDices[i]) {
+          let randomNumber = Math.floor(Math.random() * 6 + 1)
+          board[i] = 'dice-' + randomNumber // + '-outline' erilaiset, ei näköjään kovin nätit
+          nopat[i] = randomNumber
+        }
       }
     }
     setNbrOfThrowsLeft(nbrOfThrowsLeft - 1)
@@ -121,7 +106,6 @@ export default function Gameboard () {
 
   function checkResults (i) {
       if (nbrOfThrowsLeft === 0) {
-        setStatus('Valitse mihin asetat pisteesi')
         let sum = 0
         //näihin pitää saada toiminto nappulan disabloimiseen 
         if (nopat[0] === i) {
@@ -145,25 +129,36 @@ export default function Gameboard () {
           sum +=i
         }
         setYht(yht + sum)
-
-      } else {
-        setStatus('Heitä kaikki heittosi ensin.')
-      }
-
+        setNbrOfThrowsLeft(NBR_OF_THROWS)
+        board = (new Array(NBR_OF_DICES).fill(false))
+        setStatus('Aloita uusi kierros')
+        setDisabledNopat(false)
+        setDisabledHeittoNappi(false)
+        setDisabledTulosNapit(true)
+      } 
     }
 
     useEffect(() => {
-      checkResults()
         if (nbrOfThrowsLeft === NBR_OF_THROWS) {
           setStatus('Aloita peli heittämällä noppaa')
+          setDisabledTulosNapit(true)
+          setDisabledNopat(false)
+          setDisabledHeittoNappi(false)
         }
         if (nbrOfThrowsLeft < 0) {
           setNbrOfThrowsLeft(NBR_OF_THROWS - 1)
           setStatus('Heitä kaikki heittosi ensin.')
+          setDisabledTulosNapit(true)
+          setDisabledNopat(false)
+          setDisabledHeittoNappi(false)
+        }
+        if (nbrOfThrowsLeft === 0) {
+          setStatus('Valitse mihin asetat pisteesi')
+          setDisabledNopat(true)
+          setDisabledHeittoNappi(true)
+          setDisabledTulosNapit(false)
         }
     }, [nbrOfThrowsLeft] )
-
-
 
   let puuttuu = BONUS - yht
 
@@ -172,7 +167,7 @@ export default function Gameboard () {
       <View style={styles.flex}>{row}</View>
       <Text style={styles.gameinfo}>Heittoja jäljellä: {nbrOfThrowsLeft} </Text>
       <Text style={styles.status}> {status} </Text>
-      <Pressable style={styles.button} onPress={() => throwDices()}>
+      <Pressable style={styles.button} onPress={() => throwDices()} disabled={disabledHeittoNappi}>
         <Text style={styles.buttonText}>Heitä!</Text>
       </Pressable>
       <View style={styles.flex}>

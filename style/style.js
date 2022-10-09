@@ -98,7 +98,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: 25,
-     
+    borderRadius:3
   },
   yht: {
     textAlign: 'center',
