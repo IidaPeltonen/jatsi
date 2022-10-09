@@ -8,6 +8,7 @@ let board = []
 let nopat = []
 const NBR_OF_DICES = 5
 const NBR_OF_THROWS = 3
+const NBR_OF_ANSWERS = 6
 const BONUS = 63
 let tulokset = [0, 0, 0, 0, 0, 0, 0]
 
@@ -18,7 +19,7 @@ export default function Gameboard () {
     new Array(NBR_OF_DICES).fill(false)
   )
   const [selectedResult, setSelectedResult] = useState(
-    new Array(NBR_OF_DICES).fill(false)
+    new Array(NBR_OF_ANSWERS).fill(false)
   )
   const [yht, setYht] = useState(0)
   const [disabledTulosNapit, setDisabledTulosNapit] = useState(false)
@@ -42,7 +43,7 @@ export default function Gameboard () {
 
   //nappirivi
   let tuloksetButtons = []
-  for (let i = 1; i < 7; i++) {
+  for (let i = 1; i < NBR_OF_ANSWERS+1; i++) {
     tuloksetButtons.push(
       <View key={i} style={styles.tulokset}>
         <Grid style={styles.grid}>
@@ -92,6 +93,8 @@ export default function Gameboard () {
   }
 
   function throwDices () {
+    console.log('nbr of throws left: ' + nbrOfThrowsLeft)
+    console.log('nbr of dices: ' + NBR_OF_DICES)
      if ( nbrOfThrowsLeft < 4 &&  nbrOfThrowsLeft > 0) {
       for (let i = 0; i < NBR_OF_DICES; i++) {
         if (!selectedDices[i]) {
@@ -140,7 +143,7 @@ export default function Gameboard () {
 
     useEffect(() => {
         if (nbrOfThrowsLeft === NBR_OF_THROWS) {
-          setStatus('Aloita peli heittämällä noppaa')
+          setStatus('Aloita kierros heittämällä noppaa')
           setDisabledTulosNapit(true)
           setDisabledNopat(false)
           setDisabledHeittoNappi(false)
