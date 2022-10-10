@@ -10,7 +10,8 @@ const NBR_OF_DICES = 5
 const NBR_OF_THROWS = 3
 const NBR_OF_ANSWERS = 6
 const BONUS = 63
-let tulokset = [0, 0, 0, 0, 0, 0, 0]
+let tulokset = [0,0,0,0,0,0]
+let tuloksetTsekki = []
 
 export default function Gameboard () {
   const [nbrOfThrowsLeft, setNbrOfThrowsLeft] = useState(NBR_OF_THROWS)
@@ -43,7 +44,7 @@ export default function Gameboard () {
 
   //nappirivi
   let tuloksetButtons = []
-  for (let i = 1; i < NBR_OF_ANSWERS+1; i++) {
+  for (let i = 0; i < NBR_OF_ANSWERS; i++) {
     tuloksetButtons.push(
       <View key={i} style={styles.tulokset}>
         <Grid style={styles.grid}>
@@ -56,7 +57,7 @@ export default function Gameboard () {
               color={getResultColor(i)}
               disabled={disabledTulosNapit}
             >
-              <Text>{i}</Text>
+              <Text>{i+1}</Text>
             </Pressable>
           </Row>
         </Grid>
@@ -70,7 +71,7 @@ export default function Gameboard () {
 
   //ei toimi ollenkaan
   function getResultColor (i) {
-      return selectedResult[i] ? 'blue' : 'purple' // nappien väri, valittu, ei
+      return selectedResult[i] ? 'blue' : 'purple' // nappien väri, valittu, ei toimi
   }
 
   //noppien valinta
@@ -84,18 +85,18 @@ export default function Gameboard () {
   function selectResult (i) {
     let result = [...selectedResult]
     result[i] = selectedResult[i] ? false : true
+    //värinvaihti ei onnistu tässäkään
+    //setSelectedResult[i]({style: backgrouncolor='blue'})
     setSelectedResult(result)
     checkResults(i)
-    board = (new Array(NBR_OF_DICES).fill(false))
     setNbrOfThrowsLeft(NBR_OF_THROWS)
     setDisabledHeittoNappi(false)
     setDisabledNopat(false)
+    setSelectedDices('')
   }
 
   function throwDices () {
-    console.log('nbr of throws left: ' + nbrOfThrowsLeft)
-    console.log('nbr of dices: ' + NBR_OF_DICES)
-     if ( nbrOfThrowsLeft < 4 &&  nbrOfThrowsLeft > 0) {
+    if ( nbrOfThrowsLeft < 4 &&  nbrOfThrowsLeft > 0) {
       for (let i = 0; i < NBR_OF_DICES; i++) {
         if (!selectedDices[i]) {
           let randomNumber = Math.floor(Math.random() * 6 + 1)
@@ -107,30 +108,33 @@ export default function Gameboard () {
     setNbrOfThrowsLeft(nbrOfThrowsLeft - 1)
   }
 
-  function checkResults (i) {
+  function checkResults (y) {
       if (nbrOfThrowsLeft === 0) {
+        let i = y+1
         let sum = 0
         //näihin pitää saada toiminto nappulan disabloimiseen 
         if (nopat[0] === i) {
-          tulokset[i] += i
+          tulokset[y] += i
           sum +=i
         }
         if (nopat[1] === i) {
-          tulokset[i] += i
+          tulokset[y] += i
           sum +=i
         }
         if (nopat[2] === i) {
-          tulokset[i] += i
+          tulokset[y] += i
           sum +=i
         }
         if (nopat[3] === i) {
-          tulokset[i] += i
+          tulokset[y] += i
           sum +=i
         }
         if (nopat[4] === i) {
-          tulokset[i] += i
+          tulokset[y] += i
           sum +=i
         }
+        tuloksetTsekki[y] = 'true'
+        console.log(tuloksetTsekki[y])
         setYht(yht + sum)
         setNbrOfThrowsLeft(NBR_OF_THROWS)
         board = (new Array(NBR_OF_DICES).fill(false))
@@ -142,6 +146,7 @@ export default function Gameboard () {
     }
 
     useEffect(() => {
+      // console.log('tulokset: ' + tulokset[0] + tulokset[1] + tulokset[2] + tulokset[3] + tulokset[4] + tulokset[5] )
         if (nbrOfThrowsLeft === NBR_OF_THROWS) {
           setStatus('Aloita kierros heittämällä noppaa')
           setDisabledTulosNapit(true)
@@ -161,6 +166,12 @@ export default function Gameboard () {
           setDisabledHeittoNappi(true)
           setDisabledTulosNapit(false)
         }
+/*         if (tuloksetTsekki.every((val, i, arr) => val === 'true')) {
+          console.log('tuloksetTsekki: '+ tuloksetTsekki[1])
+          setDisabledTulosNapit(true)
+          setDisabledNopat(true)
+          setStatus('Peli päättyi, lopulliset pisteesi: ' + yht)
+        }  */
     }, [nbrOfThrowsLeft] )
 
   let puuttuu = BONUS - yht
