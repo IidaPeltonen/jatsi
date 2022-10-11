@@ -5,7 +5,7 @@ import { useFonts } from 'expo-font'
 export default function Header () {
   const [loaded] = useFonts({
     Caveat: require('../assets/Fonts/Caveat-VariableFont_wght.ttf'),
-    ComforterBrush: require('../assets/Fonts/ComforterBrush-Regular.ttf'),
+    Comfort: require('../assets/Fonts/ComforterBrush-Regular.ttf'), // otsikko
     Shadow: require('../assets/Fonts/ShadowsIntoLight-Regular.ttf')
   })
 
@@ -16,7 +16,7 @@ export default function Header () {
   return (
     <View style={styles.header}>
       <Text style={styles.title}>
-        <Text style={{ fontFamily: 'Caveat' }}>Mini Jatsi</Text>
+        <Text style={{ fontFamily: 'Comfort' }}>Mini Jatsi</Text>
       </Text>
     </View>
   )

@@ -18,19 +18,18 @@ export default StyleSheet.create({
   },
   title: {
     color: 'black',
-    fontWeight: 'bold',
     flex: 1,
-    fontSize: 30,
+    fontSize: 40,
     textAlign: 'center',
-    margin: 10
+    margin: 5
   },
   author: {
     color: '#2F3C7E',
     fontWeight: 'bold',
     flex: 1,
-    fontSize: 25,
+    fontSize: 30,
     textAlign: 'center',
-    margin: 10
+    margin: 5
   },
   gameboard: {
     backgroundColor: '#FBEAEB',
@@ -43,12 +42,13 @@ export default StyleSheet.create({
     justifyContent: 'center',
     fontSize: 18,
     margin: 10,
-    fontFamily: 'Comfort'
+    fontFamily: 'Caveat',
+    marginRight: 5
   },
   status: {
     textAlign: 'center',
     justifyContent: 'center',
-    fontSize: 25,
+    fontSize: 20,
     margin: 10,
     fontFamily: 'Shadow'
   },
@@ -74,8 +74,7 @@ export default StyleSheet.create({
     fontSize: 15
   },
   grid: {
-    marginLeft: 10,
-    marginRight: 10,
+    margin: 4,
     alignItems: 'center',
     paddingBottom: 10
   },
@@ -99,15 +98,24 @@ export default StyleSheet.create({
   yht: {
     textAlign: 'center',
     justifyContent: 'center',
-    fontSize: 15,
+    fontSize: 20,
     margin: 10,
-    fontFamily: 'Comfort'
+    fontFamily: 'Caveat'
   },
   puuttuu: {
     textAlign: 'center',
     justifyContent: 'center',
-    fontSize: 15,
+    fontSize: 20,
     margin: 10,
-    fontFamily: 'Comfort',
+    fontFamily: 'Caveat',
+  },
+  alusta: {
+    marginLeft: 20,
+    padding: 5,
+    backgroundColor: 'red',
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'flex-start'
   }
 })
