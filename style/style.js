@@ -91,13 +91,9 @@ export default StyleSheet.create({
     alignSelf: 'center'
   },
   tuloksetButtons: {
-    backgroundColor: '#FC85D3',
     flexDirection: 'row',
-    padding: 5,
-    backgroundColor: '#FF69B4',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 25,
     borderRadius:3
   },
   yht: {
@@ -106,5 +102,12 @@ export default StyleSheet.create({
     fontSize: 15,
     margin: 10,
     fontFamily: 'Comfort'
+  },
+  puuttuu: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    fontSize: 15,
+    margin: 10,
+    fontFamily: 'Comfort',
   }
 })
