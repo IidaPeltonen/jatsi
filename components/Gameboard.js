@@ -30,7 +30,7 @@ export default function Gameboard () {
   const [teksti, setTeksti] = useState('')
   const [gameinfo, setGameinfo] = useState('Heittoja jäljellä: ')
 
-  //nopparivi
+  //nopparivin "arvonta"
   const row = []
   for (let i = 0; i < NBR_OF_DICES; i++) {
     row.push(
@@ -49,7 +49,7 @@ export default function Gameboard () {
     )
   }
 
-  //nappirivi
+  //nappirivin tulostus, tehdään vain kerran
   let tuloksetButtons = []
   for (let i = 0; i < NBR_OF_ANSWERS; i++) {
     let y = i + 1
@@ -63,14 +63,14 @@ export default function Gameboard () {
             <Pressable
               key={'nappi' + i}
               onPress={() => selectResult(i)}
-              disabled={disabledTulosNapit}
+              disabled={disabledTulosNapit} // tämä muuttaa koko rivin disabloiduksi
             >
               <MaterialCommunityIcons
-                name={'numeric-' + y + '-box-outline'}
-                key={'row' + i}
+                name={'numeric-' + y + '-box-multiple-outline'}
+                key={'numeric' + i}
                 size={40}
                 color={getResultColor(i)}
-                disabled={disabledYksiNappi}
+                disabled={disabledYksiNappi} //miksi tämä ei muuta yhtä nappia disabloiduksi?
               ></MaterialCommunityIcons>
             </Pressable>
           </Row>
@@ -79,10 +79,10 @@ export default function Gameboard () {
     )
   }
 
+  //nollaa kaiken, aloittaa koko pelin alusta
   function reset () {
     board = []
     nopat = []
-
     tulokset = [0, 0, 0, 0, 0, 0]
     setNbrOfThrowsLeft(NBR_OF_THROWS)
     setStatus('Aloita kierros heittämällä noppaa')
@@ -90,7 +90,6 @@ export default function Gameboard () {
     setSelectedResult(new Array(NBR_OF_ANSWERS).fill(false))
     setYht(0)
     setDisabledTulosNapit(true)
-    setDisabledNopat(false)
     setDisabledYksiNappi(false)
     setDisabledHeittoNappi(false)
     setGameinfo('Heittoja jäljellä: ')
@@ -98,15 +97,18 @@ export default function Gameboard () {
     setBonuspoints(63)
   }
 
+  //tarkistetaan noppien väri
   function getDiceColor (i) {
-    return selectedDices[i] ? 'grey' : '#FC85D3' // noppien väri, valittu,
+    return selectedDices[i] ? 'grey' : '#FC85D3' // noppien väri, valittu : ei valittu
   }
 
+    //tarkistetaan noppien väri
   function getResultColor (i) {
     //selectedResult[i] ? 'true' : 'false' // nappien väri, valittu
-    return selectedResult[i] ? 'grey' : '#FC85D3' // nappien väri, valittu
+    return selectedResult[i] ? 'grey' : '#FC85D3' // nappien väri, valittu : ei valittu
   }
 
+  //yritelmä muuttaa nappien disabilityä
   function getResultDisability (i) {
     let y = i + 1
     //console.log('y: ' + y)
@@ -134,7 +136,10 @@ export default function Gameboard () {
     setDisabledHeittoNappi(false)
     setDisabledNopat(false)
     setSelectedDices('')
+    //ei toimi
     getResultDisability(i)
+    // ei toumi
+    setDisabledYksiNappi(true)
     //console.log('i:' + i)
     //console.log('disabledYksi:' + disabledYksiNappi)
   }
@@ -153,6 +158,7 @@ export default function Gameboard () {
     setNbrOfThrowsLeft(nbrOfThrowsLeft - 1)
   }
 
+  //tarkistaa mitä nappia painettiin ja laskee tuloksen yhteen
   function checkResults (i) {
     if (nbrOfThrowsLeft === 0) {
       let y = i + 1

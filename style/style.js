@@ -21,7 +21,7 @@ export default StyleSheet.create({
     flex: 1,
     fontSize: 40,
     textAlign: 'center',
-    margin: 5
+    margin: 0
   },
   author: {
     color: '#2F3C7E',
@@ -40,16 +40,15 @@ export default StyleSheet.create({
   gameinfo: {
     textAlign: 'center',
     justifyContent: 'center',
-    fontSize: 18,
-    margin: 10,
+    fontSize: 20,
+    margin: 5,
     fontFamily: 'Caveat',
-    marginRight: 5
   },
   status: {
     textAlign: 'center',
     justifyContent: 'center',
     fontSize: 20,
-    margin: 10,
+    margin: 5,
     fontFamily: 'Shadow'
   },
   row: {
@@ -60,7 +59,7 @@ export default StyleSheet.create({
     flexDirection: 'row'
   },
   button: {
-    margin: 20,
+    margin: 12,
     flexDirection: 'row',
     padding: 5,
     backgroundColor: '#FF69B4',
@@ -117,5 +116,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'flex-start'
-  }
+  },
+
 })
