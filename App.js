@@ -9,7 +9,7 @@ export default function App () {
 
   const [loaded] = useFonts({
     Caveat: require('./assets/Fonts/Caveat-VariableFont_wght.ttf'),
-    ComforterBrush: require('./assets/Fonts/ComforterBrush-Regular.ttf'),
+    Comforter: require('./assets/Fonts/ComforterBrush-Regular.ttf'),
     Shadow: require('./assets/Fonts/ShadowsIntoLight-Regular.ttf')
   })
 
