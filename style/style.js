@@ -77,45 +77,51 @@ export default StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 10
   },
-  tulokset: {
+  results: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
   },
-  tuloksetOtsikko: {
+  resultsHeader: {
     flexDirection: 'row',
     padding: 5,
     justifyContent: 'center',
     alignSelf: 'center'
   },
-  tuloksetButtons: {
+  resultsButtons: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius:3
   },
-  yht: {
+  sum: {
     textAlign: 'center',
     justifyContent: 'center',
     fontSize: 20,
-    margin: 10,
+    margin: 5,
     fontFamily: 'Caveat'
   },
-  puuttuu: {
+  missingBonus: {
     textAlign: 'center',
     justifyContent: 'center',
     fontSize: 20,
-    margin: 10,
+    margin: 5,
     fontFamily: 'Caveat',
   },
-  alusta: {
+  restart: {
     marginLeft: 20,
     padding: 5,
-    backgroundColor: 'red',
+    backgroundColor: '#cc3300',
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    alignSelf: 'flex-start'
+    alignSelf: 'flex-start',
+    shadowColor: 'white',
+    shadowOpacity: 0,
+    shadowRadius: 100
   },
+  restartButtonText: {
+    color: 'white'
+  }
 
 })
